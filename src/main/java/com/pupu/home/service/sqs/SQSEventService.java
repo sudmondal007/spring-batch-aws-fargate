@@ -26,7 +26,7 @@ public class SQSEventService {
 	private static Logger log = LoggerFactory.getLogger(SQSEventService.class); 
 	
 	private SqsClient sqsClient = SqsClient.builder()
-			.region(Region.of(System.getenv(MemberDataLoadConstants.AWS_REGION)))
+			.region(Region.of(System.getenv(MemberDataLoadConstants.UM_AWS_REGION)))
 			.build();
 	
 	public void sendMessageToSqs(List<Member> memberList) {

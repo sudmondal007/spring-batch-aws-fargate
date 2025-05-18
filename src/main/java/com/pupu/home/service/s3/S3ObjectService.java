@@ -25,7 +25,7 @@ public class S3ObjectService {
 		try {
 			log.info("S3ObjectService.processAndGetS3Object() :: creating S3 object");
 			S3Client s3Client = S3Client.builder()
-										.region(Region.of(System.getenv(MemberDataLoadConstants.AWS_REGION)))
+										.region(Region.of(System.getenv(MemberDataLoadConstants.UM_AWS_REGION)))
 										.build();
 										
 			objectBytes = s3Client.getObjectAsBytes(objectRequest);
