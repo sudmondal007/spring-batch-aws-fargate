@@ -14,6 +14,9 @@ import org.springframework.stereotype.Service;
 import com.pupu.home.dto.Member;
 import com.pupu.home.utils.MemberDataLoadConstants;
 
+import software.amazon.awssdk.auth.credentials.AwsBasicCredentials;
+import software.amazon.awssdk.auth.credentials.AwsCredentialsProvider;
+import software.amazon.awssdk.auth.credentials.StaticCredentialsProvider;
 import software.amazon.awssdk.regions.Region;
 import software.amazon.awssdk.services.sqs.SqsClient;
 import software.amazon.awssdk.services.sqs.model.MessageAttributeValue;
@@ -25,8 +28,16 @@ import software.amazon.awssdk.services.sqs.model.SendMessageBatchRequestEntry;
 public class SQSEventService {
 	private static Logger log = LoggerFactory.getLogger(SQSEventService.class); 
 	
+	private AwsBasicCredentials awsBasicCredentials = AwsBasicCredentials.builder()
+			.accessKeyId(System.getenv(MemberDataLoadConstants.AWS_ACCESS_KEY_ID))
+			.secretAccessKey(System.getenv(MemberDataLoadConstants.AWS_SECRET_ACCESS_KEY))
+			.build();
+	
+	private AwsCredentialsProvider cred = StaticCredentialsProvider.create(awsBasicCredentials);
+	
 	private SqsClient sqsClient = SqsClient.builder()
 			.region(Region.of(System.getenv(MemberDataLoadConstants.UM_AWS_REGION)))
+			.credentialsProvider(cred)
 			.build();
 	
 	public void sendMessageToSqs(List<Member> memberList) {

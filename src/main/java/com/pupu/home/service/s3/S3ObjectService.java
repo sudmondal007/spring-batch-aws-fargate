@@ -6,6 +6,9 @@ import org.springframework.stereotype.Service;
 
 import com.pupu.home.utils.MemberDataLoadConstants;
 
+import software.amazon.awssdk.auth.credentials.AwsBasicCredentials;
+import software.amazon.awssdk.auth.credentials.AwsCredentialsProvider;
+import software.amazon.awssdk.auth.credentials.StaticCredentialsProvider;
 import software.amazon.awssdk.core.ResponseBytes;
 import software.amazon.awssdk.regions.Region;
 import software.amazon.awssdk.services.s3.S3Client;
@@ -23,12 +26,22 @@ public class S3ObjectService {
 		GetObjectRequest objectRequest = GetObjectRequest.builder().key(objectKey).bucket(bucket).build();
 		
 		try {
-			log.info("S3ObjectService.processAndGetS3Object() :: creating S3 object");
+			log.info("S3ObjectService.processAndGetS3Object() :: creating S3 client");
+			AwsBasicCredentials awsBasicCredentials = AwsBasicCredentials.builder()
+					.accessKeyId(System.getenv(MemberDataLoadConstants.AWS_ACCESS_KEY_ID))
+					.secretAccessKey(System.getenv(MemberDataLoadConstants.AWS_SECRET_ACCESS_KEY))
+					.build();
+			
+			AwsCredentialsProvider cred = StaticCredentialsProvider.create(awsBasicCredentials);
+			
 			S3Client s3Client = S3Client.builder()
 										.region(Region.of(System.getenv(MemberDataLoadConstants.UM_AWS_REGION)))
+										.credentialsProvider(cred)
 										.build();
 										
+			log.info("S3ObjectService.processAndGetS3Object() :: created S3 client");
 			objectBytes = s3Client.getObjectAsBytes(objectRequest);
+			log.info("S3ObjectService.processAndGetS3Object() :: retrieved S3 object");
 		} catch(Exception ex) {
 			log.error("S3ObjectService.processAndGetS3Object() :: error", ex);
 		}
