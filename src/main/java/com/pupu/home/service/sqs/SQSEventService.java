@@ -28,16 +28,16 @@ import software.amazon.awssdk.services.sqs.model.SendMessageBatchRequestEntry;
 public class SQSEventService {
 	private static Logger log = LoggerFactory.getLogger(SQSEventService.class); 
 	
-	private AwsBasicCredentials awsBasicCredentials = AwsBasicCredentials.builder()
-			.accessKeyId(System.getenv(MemberDataLoadConstants.AWS_ACCESS_KEY_ID))
-			.secretAccessKey(System.getenv(MemberDataLoadConstants.AWS_SECRET_ACCESS_KEY))
-			.build();
+	//private AwsBasicCredentials awsBasicCredentials = AwsBasicCredentials.builder()
+	//		.accessKeyId(System.getenv(MemberDataLoadConstants.AWS_ACCESS_KEY_ID))
+	//		.secretAccessKey(System.getenv(MemberDataLoadConstants.AWS_SECRET_ACCESS_KEY))
+	//		.build();
 	
-	private AwsCredentialsProvider cred = StaticCredentialsProvider.create(awsBasicCredentials);
+	//private AwsCredentialsProvider cred = StaticCredentialsProvider.create(awsBasicCredentials);
 	
 	private SqsClient sqsClient = SqsClient.builder()
 			.region(Region.of(System.getenv(MemberDataLoadConstants.UM_AWS_REGION)))
-			.credentialsProvider(cred)
+			//.credentialsProvider(cred)
 			.build();
 	
 	public void sendMessageToSqs(List<Member> memberList) {
