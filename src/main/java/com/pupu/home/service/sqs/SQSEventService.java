@@ -71,7 +71,7 @@ public class SQSEventService {
 					.build();
 			
 			log.info("SQSEventService.sendMessageToSqs() :: sending SQS BATCH");
-			sqsClient.sendMessageBatch(batchRequest);
+			//sqsClient.sendMessageBatch(batchRequest);
 		}
 		
 	}
