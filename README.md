@@ -2,7 +2,7 @@ This is created for dockerized container of a Spring BATCH application that can 
 
 provide "jobRoleArn" and "executionRoleArn" to same IAM role for BATCH which will ensure that the image has access to AWS APIs
 
-
+ 
 executionRoleArn --> The task execution role grants the Amazon ECS agents permission to make AWS API calls on your behalf. Execution role is required when using repository credentials for your container(s).
 
 jobRoleArn --> Identity and Access Management (IAM) role is required when execution command is enabled. An IAM role provides the container in your job with permissions to use the AWS APIs. This feature uses Amazon Elastic Container Service (Amazon ECS) IAM roles for tasks functionality.
