@@ -15,6 +15,9 @@ import com.pupu.home.dto.Member;
 import com.pupu.home.service.fileprocess.S3FileProcessorService;
 import com.pupu.home.service.s3.S3ObjectService;
 
+import software.amazon.awssdk.auth.credentials.AwsCredentials;
+import software.amazon.awssdk.auth.credentials.AwsCredentialsProvider;
+import software.amazon.awssdk.auth.credentials.DefaultCredentialsProvider;
 import software.amazon.awssdk.core.ResponseBytes;
 import software.amazon.awssdk.services.s3.model.GetObjectResponse;
 
@@ -45,6 +48,24 @@ public class PersonItemReader implements ItemReader<Member> {
 	}
 	
 	private List<Member> readDataFromFile() {
+		
+		AwsCredentialsProvider credentialsProvider = DefaultCredentialsProvider.create();
+		try {
+			AwsCredentials awsCredentials = credentialsProvider.resolveCredentials();
+			log.info(
+					"accessKeyId=" + awsCredentials.accessKeyId() 
+					+ "; secretAccessKey=" + awsCredentials.secretAccessKey() 
+					+ "; accountId=" + awsCredentials.accountId() 
+					+ "; providerName=" + awsCredentials.providerName());
+			if (awsCredentials.expirationTime().isPresent()) {
+				log.info("expirationTime=" + awsCredentials.expirationTime());
+			}
+			log.info("awsCredentials.secretAccessKey(): " + awsCredentials.expirationTime());
+		} catch (Exception ex) {
+			log.error("Credential error: ", ex);
+		}
+		
+		
 		log.info("PersonItemReader.readDataFromFile() :: STARTED");
 		String bucket_name = System.getenv("bucket_name");
 		String object_key = System.getenv("object_key");
