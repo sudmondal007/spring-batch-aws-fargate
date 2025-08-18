@@ -41,7 +41,7 @@ public class SQSEventService {
 			.build();
 	
 	public void sendMessageToSqs(List<Member> memberList) {
-		log.info("SQSEventService.sendMessageToSqs() :: STARTED");
+		//log.info("SQSEventService.sendMessageToSqs() :: STARTED");
 		
 		if(CollectionUtils.isNotEmpty(memberList)) {
 			
@@ -70,7 +70,7 @@ public class SQSEventService {
 					.entries(sqsBatchEntries)
 					.build();
 			
-			log.info("SQSEventService.sendMessageToSqs() :: sending SQS BATCH");
+			//log.info("SQSEventService.sendMessageToSqs() :: sending SQS BATCH");
 			//sqsClient.sendMessageBatch(batchRequest);
 		}
 		

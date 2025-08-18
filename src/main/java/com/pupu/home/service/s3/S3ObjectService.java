@@ -20,7 +20,7 @@ public class S3ObjectService {
 	private static Logger log = LoggerFactory.getLogger(S3ObjectService.class);
 	
 	public ResponseBytes<GetObjectResponse> processAndGetS3Object(String bucket, String objectKey) {
-		log.info("S3ObjectService.processAndGetS3Object() :: STARTED");
+		//log.info("S3ObjectService.processAndGetS3Object() :: STARTED");
 		ResponseBytes<GetObjectResponse> objectBytes = null;
 		
 		GetObjectRequest objectRequest = GetObjectRequest.builder().key(objectKey).bucket(bucket).build();
