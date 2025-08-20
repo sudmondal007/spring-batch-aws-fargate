@@ -56,7 +56,12 @@ public class PersonItemReader implements ItemReader<Member> {
 					"accessKeyId=" + awsCredentials.accessKeyId() 
 					+ "; secretAccessKey=" + awsCredentials.secretAccessKey() 
 					+ "; accountId=" + awsCredentials.accountId() 
-					+ "; providerName=" + awsCredentials.providerName());
+					+ "; providerName=" + awsCredentials.providerName() 
+					+ "; SYSPROD AWS_CONTAINER_CREDENTIALS_RELATIVE_URI=" + System.getProperty("AWS_CONTAINER_CREDENTIALS_RELATIVE_URI")
+					+ "; SYSENV AWS_CONTAINER_CREDENTIALS_RELATIVE_URI=" + System.getenv("AWS_CONTAINER_CREDENTIALS_RELATIVE_URI")
+					+ "; SYSPROD AWS_CONTAINER_CREDENTIALS_FULL_URI=" + System.getProperty("AWS_CONTAINER_CREDENTIALS_FULL_URI")
+					+ "; SYSENV AWS_CONTAINER_CREDENTIALS_FULL_URI=" + System.getenv("AWS_CONTAINER_CREDENTIALS_FULL_URI")
+					);
 			if (awsCredentials.expirationTime().isPresent()) {
 				log.info("expirationTime=" + awsCredentials.expirationTime());
 			}
